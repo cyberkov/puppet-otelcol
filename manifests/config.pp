@@ -33,7 +33,7 @@ class otelcol::config inherits otelcol {
   concat::fragment { 'otelcol-config-baseconfig' :
     target  => 'otelcol-config',
     order   => 10000,
-    content => stdlib::to_yaml($component),
+    content => to_yaml($component),
   }
 
   file { 'otelcol-environment' :

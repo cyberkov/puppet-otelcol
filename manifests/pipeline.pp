@@ -9,7 +9,7 @@
 # @param config
 #   The configuration for the pipeline.
 # @param order
-#   The order in which the pipeline should be configured.  
+#   The order in which the pipeline should be configured.
 # @example Configure a pipeline
 #   otelcol::pipeline { 'namevar': }
 define otelcol::pipeline (
@@ -27,6 +27,6 @@ define otelcol::pipeline (
   concat::fragment { "otelcol-config-pipeline-${name}" :
     target  => 'otelcol-config',
     order   => $real_order,
-    content => stdlib::to_yaml($component),
+    content => to_yaml($component),
   }
 }

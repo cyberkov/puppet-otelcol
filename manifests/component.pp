@@ -14,10 +14,10 @@
 #   The pipelines to add the component to
 #
 # @example Basic Usage
-#   otelcol::component { 'receiver_name-receiver':': 
+#   otelcol::component { 'receiver_name-receiver':
 #     component_name => 'receiver_name',
 #     type           => 'receiver',
-# }
+#   }
 # @api private
 define otelcol::component (
   Otelcol::Component::Name $component_name,
@@ -35,7 +35,7 @@ define otelcol::component (
   concat::fragment { "otelcol-config-${type}-${component_name}" :
     target  => 'otelcol-config',
     order   => $order,
-    content => stdlib::to_yaml($component),
+    content => to_yaml($component),
   }
 
   $pipelines.each |String $pipeline| {
@@ -51,7 +51,7 @@ define otelcol::component (
     concat::fragment { "otelcol-config-${type}-${component_name}-${pipeline}" :
       target  => 'otelcol-config',
       order   => $order,
-      content => stdlib::to_yaml($component),
+      content => to_yaml($component),
     }
   }
 }
