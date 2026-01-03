@@ -16,7 +16,7 @@
 #   }
 define otelcol::connector (
   Hash $config = {},
-  Integer[0,999] $order = 5,
+  Integer[0,999] $order = 0,
   Array[String[1]] $pipelines = [],
 ) {
   $real_order = 1500+$order

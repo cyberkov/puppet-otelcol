@@ -2,7 +2,7 @@
 # Connectors are used to connect two pipelines together in OpenTelemetry Collector
 
 # Define a receiver for traces
-otelcol::receiver { 'otlp' :
+otelcol::receiver { 'otlp':
   config    => {
     'protocols' => {
       'grpc' => { 'endpoint' => 'localhost:4317' },
@@ -12,7 +12,7 @@ otelcol::receiver { 'otlp' :
 }
 
 # Define a connector that converts spans to metrics
-otelcol::connector { 'spanmetrics' :
+otelcol::connector { 'spanmetrics':
   config    => {
     'dimensions' => [
       { 'name' => 'http.method' },

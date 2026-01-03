@@ -20,7 +20,7 @@ describe 'otelcol::connector' do
 
       it {
         is_expected.to contain_otelcol__component('spanmetrics-connectors').with({
-                                                                                   'order' => 1505,
+                                                                                   'order' => 1500,
                                                                                    'config' => {
                                                                                      'key' => 'value',
                                                                                    },
@@ -32,7 +32,7 @@ describe 'otelcol::connector' do
 
       it {
         is_expected.to contain_concat__fragment('otelcol-config-connectors-spanmetrics').with({
-                                                                                                'order' => 1505,
+                                                                                                'order' => 1500,
                                                                                                 'target' => 'otelcol-config',
                                                                                               })
       }
