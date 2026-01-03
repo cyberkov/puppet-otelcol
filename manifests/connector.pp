@@ -27,7 +27,7 @@ define otelcol::connector (
   Array[String[1]] $receiver_pipelines = [],
 ) {
   $real_order = 1500+$order
-  
+
   # Define the connector in the connectors section
   $component = {
     'connectors' => {
