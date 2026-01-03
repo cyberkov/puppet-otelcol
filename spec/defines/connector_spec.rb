@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 describe 'otelcol::connector' do
-  let(:title) { 'spanmetrics' }
+  let(:title) { 'count' }
   let(:params) do
     {
       'config' => {
@@ -19,23 +19,43 @@ describe 'otelcol::connector' do
       it { is_expected.to compile }
 
       it {
-        is_expected.to contain_otelcol__component('spanmetrics-connectors').with({
-                                                                                   'order' => 1500,
-                                                                                   'config' => {
-                                                                                     'key' => 'value',
-                                                                                   },
-                                                                                   'pipelines' => [],
-                                                                                   'type' => 'connectors',
-                                                                                   'component_name' => 'spanmetrics',
-                                                                                 })
+        is_expected.to contain_concat__fragment('otelcol-config-connectors-count').with({
+                                                                                          'order' => 1500,
+                                                                                          'target' => 'otelcol-config',
+                                                                                        })
       }
 
-      it {
-        is_expected.to contain_concat__fragment('otelcol-config-connectors-spanmetrics').with({
-                                                                                                'order' => 1500,
-                                                                                                'target' => 'otelcol-config',
-                                                                                              })
-      }
+      context 'with exporter and receiver pipelines' do
+        let :params do
+          super().merge({
+            'exporter_pipelines' => ['traces'],
+            'receiver_pipelines' => ['metrics'],
+          })
+        end
+
+        it { is_expected.to compile }
+
+        it {
+          is_expected.to contain_concat__fragment('otelcol-config-connectors-count').with({
+                                                                                            'order' => 1500,
+                                                                                            'target' => 'otelcol-config',
+                                                                                          })
+        }
+
+        it {
+          is_expected.to contain_concat__fragment('otelcol-config-connector-count-exporter-traces').with({
+                                                                                                           'order' => 1500,
+                                                                                                           'target' => 'otelcol-config',
+                                                                                                         })
+        }
+
+        it {
+          is_expected.to contain_concat__fragment('otelcol-config-connector-count-receiver-metrics').with({
+                                                                                                            'order' => 1500,
+                                                                                                            'target' => 'otelcol-config',
+                                                                                                          })
+        }
+      end
 
       context 'with order' do
         let :params do
@@ -45,15 +65,10 @@ describe 'otelcol::connector' do
         it { is_expected.to compile }
 
         it {
-          is_expected.to contain_otelcol__component('spanmetrics-connectors').with({
-                                                                                     'order' => 1501,
-                                                                                     'config' => {
-                                                                                       'key' => 'value',
-                                                                                     },
-                                                                                     'pipelines' => [],
-                                                                                     'type' => 'connectors',
-                                                                                     'component_name' => 'spanmetrics',
-                                                                                   })
+          is_expected.to contain_concat__fragment('otelcol-config-connectors-count').with({
+                                                                                            'order' => 1501,
+                                                                                            'target' => 'otelcol-config',
+                                                                                          })
         }
       end
     end
